@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  hankey:
+    build: .
+    restart: always
+    env_file: .env
+    depends_on: 
+      - lavalink
+    volumes:
+      - .:/app
+  lavalink:
+    image: fredboat/lavalink:master
+    restart: always
+    volumes:
+      - ./application.yml:/opt/Lavalink/application.yml
