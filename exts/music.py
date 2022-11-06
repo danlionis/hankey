@@ -1,5 +1,5 @@
 import interactions
-from interactions.ext.lavalink import VoiceClient, VoiceState
+from interactions.ext.lavalink import VoiceClient, VoiceState, helpers
 from interactions.ext.lavalink.player import Player
 
 
@@ -14,10 +14,12 @@ class Music(interactions.Extension):
 
     @interactions.extension_listener()
     async def on_voice_state_update(self, before: VoiceState, after: VoiceState):
+
         """
         Disconnect if bot is alone
         """
-        if before and not after.joined:
+        # if before and not after.joined:
+        if before:
             voice_states = self.client.get_channel_voice_states(
                 before.channel_id)
             if len(voice_states) == 1 and voice_states[0].user_id == self.client.me.id:
@@ -67,6 +69,7 @@ class Music(interactions.Extension):
     @interactions.extension_command()
     async def leave(self, ctx: interactions.CommandContext):
         await self.client.disconnect(ctx.guild_id)
+        return await ctx.send("OK")
 
     @interactions.extension_command()
     @interactions.option(channel_types=[interactions.ChannelType.GUILD_VOICE])

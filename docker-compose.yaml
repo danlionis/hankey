@@ -4,6 +4,8 @@ services:
   hankey:
     build: .
     restart: always
+    environment:
+      - "PYTHONUNBUFFERED=1"
     env_file: .env
     depends_on: 
       - lavalink
